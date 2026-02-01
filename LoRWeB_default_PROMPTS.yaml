@@ -1,0 +1,86 @@
+# Copyright (C) 2026 NVIDIA Corporation.  All rights reserved.
+#
+# This work is licensed under the LICENSE file
+# located at the root directory.
+
+---
+job: extension
+config:
+  # this name will be the folder and filename name
+  name: "LoRWeB_default_PROMPTS"
+  process:
+    - type: 'sd_trainer'
+      # root folder to save training sessions/samples/weights
+      training_folder: "output"
+      device: cuda:0
+      network:
+        type: "attlora"
+        linear: 1
+        linear_alpha: 1
+        network_kwargs:
+          lora_keys_dim: 128
+          lora_heads: 1
+          mixing_coeffs_type: "mean"
+          external_query: true
+          pooling_type: "avg"
+          query_projection_type: "linear"
+          external_query_model: openai/clip-vit-large-patch14      # you can swap here to google/siglip-so400m-patch14-384
+      save:
+        dtype: float16
+        save_every: 250
+        max_step_saves_to_keep: 4
+        push_to_hub: false
+      datasets:
+        - folder_path: "./data/relation252k_processed/target"
+          control_path: "./data/relation252k_processed/control"
+          caption_ext: "txt"
+          caption_dropout_rate: 0.05
+          shuffle_tokens: false
+          cache_latents_to_disk: false
+          resolution: [ 512]  # you can add more resolutions here, e.g. [ 512, 768, 1024 ]
+          is_analogy: false
+          is_box_analogy: true
+          full_size_control_images: true
+          enable_relation_captions: true
+      train:
+        batch_size: 6
+        steps: 10000
+        gradient_accumulation_steps: 1
+        train_unet: true
+        train_text_encoder: false
+        gradient_checkpointing: true
+        noise_scheduler: "flowmatch"
+        optimizer: "adamw8bit"
+        optimizer_params:
+          betas: [0.9, 0.99]
+          weight_decay: 0.05
+        lr: 1e-3
+        timestep_type: "weighted"
+        dtype: bf16
+        debug_save_target_images: true
+      model:
+        name_or_path: "black-forest-labs/FLUX.1-Kontext-dev"
+        arch: "flux_kontext"
+        quantize: true
+      sample:
+        sampler: "flowmatch"
+        sample_every: 500
+        width: 1024
+        height: 1024
+        prompts:
+          - "Example prompt to log into wandb --ctrl_img ../data/relation252k/control/img1.png_img2.png_1.jpg"
+        neg: ""
+        seed: 42
+        walk_seed: true
+        guidance_scale: 4
+        sample_steps: 20
+        is_analogy: false
+        is_box_analogy: true
+      logging:
+        use_wandb: true
+        log_every: 1
+        project_name: "lorweb"
+        verbose: false
+meta:
+  name: "[name]"
+  version: '1.0'

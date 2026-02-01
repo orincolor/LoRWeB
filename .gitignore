@@ -1,0 +1,13 @@
+data/
+__pycache__/**
+**/.ipynb_checkpoints/**
+**/delete*
+**/outputs
+venv
+tmp*
+*.pyc
+outputs*
+.vscode
+**/output
+**/wandb
+toolkit/keymaps/*.safetensors
