@@ -5,8 +5,8 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2602.15727-b31b1b.svg)](https://arxiv.org/abs/2602.15727)
 [![Project Website](https://img.shields.io/badge/🌐-Project%20Website-blue)](https://research.nvidia.com/labs/par/lorweb)
-[![Evaluation Dataset (Comming Soon)](https://img.shields.io/badge/🤗-Evaluation%20Dataset%20(Coming%20Soon)-yellow)](https://huggingface.co/datasets/hilamanor/LoRWeB_evalset)
-[![Model (Comming Soon)](https://img.shields.io/badge/🤗-Model%20(Coming%20Soon)-yellow)](https://huggingface.co/hilamanor/lorweb)
+[![Evaluation Dataset](https://img.shields.io/badge/🤗-Evaluation%20Dataset-yellow)](https://huggingface.co/datasets/hilamanor/LoRWeB_evalset)
+[![Model](https://img.shields.io/badge/🤗-Model-yellow)](https://huggingface.co/hilamanor/lorweb)
 
 </div>
 
@@ -69,15 +69,21 @@ Use `preprocess_data.py` to preprocess a pre-downloaded dataset.
 
 ### 🎨 Inference
 
-You can test our model's checkpoint from [HuggingFace (coming soon)](https://huggingface.co/hilamanor/lorweb) using `inference.py`.
+You can test a reproduced* model checkpoint from [HuggingFace](https://huggingface.co/hilamanor/lorweb) using `inference.py`.
 
 ```bash
 python inference.py -w "output/your_model/your_model.safetensors" -c "output/your_model/config.yaml" -a "data/path_to_a_img.jpg" -t "data/path_to_atag_img.jpg" -b "data/patH-to_b_img.jpg" -o "outputs/generated_btag_img_path.jpg"
 ```
 
+\*This checkpoint is a reproduction of our model's checkpoint from the paper, trained on Technion hardware. Some differences from the results reported in the paper and obtained via the original checkpoint are expected. Please see `samples` for examples on the expected differences. These results can be reproduced via downloading the evluation set and the original images and running e.g.:
+
+```bash
+python inference.py -w "lorweb_model/lorweb_model.safetensors" -c "config.yaml" -a "data/original/unsplash_animals/alvan-nee-brFsZ7qszSY-unsplash.jpg" -t "data/decoded_random_inference_set/db_not_in_trainset/animals/Give_this_animal_a_fantastical_set_of_armor/alvan-nee-brFsZ7qszSY-unsplash_2.png" -b "data/original/unsplash_animals/ryan-walton-AbNO2iejoXA-unsplash.jpg" -o "samples/armor_doggy.jpg" -p "Give this animal a fantastical set of armor"
+```
+
 ### ℹ️ Additional Information
 
-Our complementary custom evaluation set is available on [HuggingFace (coming soon)](https://huggingface.co/datasets/hilamanor/LoRWeB_evalset).
+Our complementary custom evaluation set is available on [HuggingFace](https://huggingface.co/datasets/hilamanor/LoRWeB_evalset).
 
 ## 📚 Citation
 

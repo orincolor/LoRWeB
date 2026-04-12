@@ -99,14 +99,19 @@ class AiToolkitDataset(BucketsMixin, CaptionMixin, Dataset):
         self.folder_size_json = folder_path + '_sizes.json'
         self.dataset_size_json = self.dataset_path+  '_sizes.json'
         if os.path.exists(self.folder_size_json):
+            print('Found folder size json, loading...')
             with open(self.folder_size_json, 'r') as f:
                 self.folder_size_json = json.load(f)
         else:
+            print('No folder size json found, Longer...')
             self.folder_size_json = None
+            
         if os.path.exists(self.dataset_size_json):
+            print('Found dataset size json, loading...')
             with open(self.dataset_size_json, 'r') as f:
                 self.dataset_size_json = json.load(f)
         else:
+            print('No dataset size json found, Longer...')
             self.dataset_size_json = None
 
         self.enable_relation_captions = None
@@ -200,7 +205,6 @@ class AiToolkitDataset(BucketsMixin, CaptionMixin, Dataset):
 
         self.size_database["__version__"] = dataloader_version
 
-        utiltize_gpu_for_nothing = 'relation' in file_list[0]
         bad_count = 0
         for file_i, file in tqdm(enumerate(file_list), desc="creating FileItemDTOs", total=len(file_list)):
             try:
@@ -229,9 +233,6 @@ class AiToolkitDataset(BucketsMixin, CaptionMixin, Dataset):
                     print_acc(f"Error processing image: {file}")
                 print_acc(e)
                 bad_count += 1
-
-            if utiltize_gpu_for_nothing and file_i % 600000 == 0:
-                tmpA = torch.matmul(torch.randn(10000,10000),torch.randn(10000,10000))
 
         # save the size database
         with open(dataset_size_file, 'w') as f:
