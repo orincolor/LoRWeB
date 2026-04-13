@@ -625,7 +625,7 @@ class AttLoraLinearAdapter(nn.Module, BaseTunerLayer):
                 x = self._cast_input_dtype(x, lora_A.dtype)
 
                 query = None
-                if self.external_query[active_adapter]:
+                if self.external_query[active_adapter] and external_query is not None:
                     query = external_query
                     if query.ndim == 2 or (query.ndim == 3 and query.shape[1] > 1):
                         query = query.reshape(query.shape[0], 1, -1)
@@ -1848,17 +1848,9 @@ class CustomFluxAttnProcessor2_0(FluxAttnProcessor2_0):
 
         # `sample` projections.
         # if external_query is not None and 'external_query' in inspect.signature(attn.to_q.forward).parameters:
-        query = attn.to_q(hidden_states, external_query=external_query, wtext=wtext)
-        # else:
-            # query = attn.to_q(hidden_states)
-
-        # if external_query is not None and 'external_query' in inspect.signature(attn.to_k.forward).parameters:
-        key = attn.to_k(hidden_states, external_query=external_query, wtext=wtext)
-        # else:
-            # key = attn.to_k(hidden_states)
-
-        # if external_query is not None and 'external_query' in inspect.signature(attn.to_v.forward).parameters:
-        value = attn.to_v(hidden_states, external_query=external_query, wtext=wtext)
+        query = attn.to_q(hidden_states, external_query=external_query, wtext=wtext) if external_query is not None else attn.to_q(hidden_states)
+        key = attn.to_k(hidden_states, external_query=external_query, wtext=wtext) if external_query is not None else attn.to_k(hidden_states)
+        value = attn.to_v(hidden_states, external_query=external_query, wtext=wtext) if external_query is not None else attn.to_v(hidden_states)
         # else:
             # value = attn.to_v(hidden_states)
 
