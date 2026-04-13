@@ -256,7 +256,7 @@ dependencies:
       - datasets==4.0.0
       - dctorch==0.1.2
       - debugpy==1.8.16
-      - diffusers==0.35.0.dev0
+      - diffusers==0.35.0
       - dill==0.3.8
       - dotenv==0.9.9
       - einops==0.8.1
