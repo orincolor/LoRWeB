@@ -256,7 +256,7 @@ dependencies:
       - datasets==4.0.0
       - dctorch==0.1.2
       - debugpy==1.8.16
-      - diffusers==0.35.0
+      - git+https://github.com/huggingface/diffusers.git@8d1de40891e9c74fe03af9224868b5fb21fc0ab6
       - dill==0.3.8
       - dotenv==0.9.9
       - einops==0.8.1
