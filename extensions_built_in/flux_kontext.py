@@ -1822,15 +1822,12 @@ class CustomAttention(Attention):
                            unused_kwargs, self.processor.__class__.__name__)
         cross_attention_kwargs = {k: w for k, w in cross_attention_kwargs.items() if k in attn_parameters}
 
-        return self.processor(
-            self,
-            hidden_states,
-            external_query=external_query,
-            encoder_hidden_states=encoder_hidden_states,
-            attention_mask=attention_mask,
-            wtext=wtext,
-            **cross_attention_kwargs,
-        )
+        import inspect as _i
+        _kw = set(_i.signature(self.processor.__call__).parameters)
+        _ex = {}
+        if "external_query" in _kw: _ex["external_query"] = external_query
+        if "wtext" in _kw: _ex["wtext"] = wtext
+        return self.processor(self, hidden_states, encoder_hidden_states=encoder_hidden_states, attention_mask=attention_mask, **_ex, **cross_attention_kwargs)
 
 
 class CustomFluxAttnProcessor2_0(FluxAttnProcessor2_0):
