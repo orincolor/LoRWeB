@@ -10,6 +10,9 @@
 
 </div>
 
+<div align="center">
+  <img width="1470" height="834" alt="Gardio app" src="https://github.com/user-attachments/assets/8de7cdff-8201-4229-9c03-e9548a8884cb" />
+</div>
 ## 👥 Authors
 
 <div align="center">
