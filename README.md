@@ -10,9 +10,6 @@
 
 </div>
 
-<div align="center">
-  <img width="1470" height="834" alt="Gardio app" src="https://github.com/user-attachments/assets/8de7cdff-8201-4229-9c03-e9548a8884cb" />
-</div>
 ## 👥 Authors
 
 <div align="center">
@@ -27,6 +24,11 @@
 
 *Given a prompt and an image triplet $\{a,a',b\}$ that visually describe a desired transformation, LoRWeB dynamically constructs a single LoRA from a learnable basis of LoRA modules, and produces an editing result $b'$ that applies the same analogy to the new image.*
 
+</div>
+
+
+<div align="center">
+  <img width="1470" height="834" alt="Gardio app" src="https://github.com/user-attachments/assets/8de7cdff-8201-4229-9c03-e9548a8884cb" />
 </div>
 
 ## 📄 Abstract
